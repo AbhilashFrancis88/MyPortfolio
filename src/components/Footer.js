@@ -1,4 +1,5 @@
 import React from 'react';
+import Logo from './Logo';
 import './Footer.css';
 
 export default function Footer() {
@@ -6,7 +7,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-inner container">
         <a href="#hero" className="footer-logo">
-          <span className="logo-bracket">&lt;</span>AF<span className="logo-bracket">/&gt;</span>
+          <Logo size={32} />
         </a>
         <p className="footer-copy">
           © {new Date().getFullYear()} Abhilash Francis · Built with React.js

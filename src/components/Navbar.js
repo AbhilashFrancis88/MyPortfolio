@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../ThemeContext';
+import Logo from './Logo';
 import './Navbar.css';
 
 const links = [
@@ -49,7 +50,7 @@ export default function Navbar() {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="nav-inner">
         <a href="#hero" className="nav-logo">
-          <span className="logo-bracket">&lt;</span>AF<span className="logo-bracket">/&gt;</span>
+          <Logo size={36} />
         </a>
 
         <ul className={`nav-links ${open ? 'open' : ''}`}>

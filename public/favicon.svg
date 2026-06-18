@@ -1,0 +1,12 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hexagon -->
+  <path d="M60 4L110.62 33V91L60 120L9.38 91V33L60 4Z" fill="#0A0F1E" stroke="#22D3EE" stroke-width="4"/>
+  <path d="M60 4L110.62 33V91L60 120L9.38 91V33L60 4Z" fill="#6366F1" opacity="0.08"/>
+  <!-- A -->
+  <path d="M32 88L52 34H58L78 88H71L66.2 76H43.8L39 88H32ZM46 70H64L55 44L46 70Z" fill="#F8FAFC"/>
+  <!-- F -->
+  <path d="M62 88V40H88V47H69V60H84V67H69V88H62Z" fill="#22D3EE" opacity="0.85"/>
+  <!-- Brackets -->
+  <path d="M18 58L28 48V52L22 58L28 64V68L18 58Z" fill="#6366F1"/>
+  <path d="M102 58L92 48V52L98 58L92 64V68L102 58Z" fill="#6366F1"/>
+</svg>
