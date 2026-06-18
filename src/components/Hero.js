@@ -47,7 +47,7 @@ export default function Hero() {
           <h1 className="hero-name">Abhilash<br /><span>Francis</span></h1>
 
           <div className="hero-role-line">
-            <span className="role-prefix mono-tag">// </span>
+            <span className="role-prefix mono-tag">{'// '}</span>
             <span className="hero-role">{displayed}</span>
             <span className="cursor">|</span>
           </div>
@@ -86,7 +86,7 @@ export default function Hero() {
 {'  '}<span className="t-key">name</span>: <span className="t-str">"Abhilash Francis"</span>,{'\n'}
 {'  '}<span className="t-key">role</span>: <span className="t-str">"Front-End Developer"</span>,{'\n'}
 {'  '}<span className="t-key">location</span>: <span className="t-str">"Kochi, Kerala 🇮🇳"</span>,{'\n'}
-{'  '}<span className="t-key">experience</span>: <span className="t-num">4</span>, <span className="t-comment">// years</span>{'\n'}
+{'  '}<span className="t-key">experience</span>: <span className="t-num">4</span>, <span className="t-comment">{'// years'}</span>{'\n'}
 {'  '}<span className="t-key">stack</span>: [{'\n'}
 {'    '}<span className="t-str">"React.js"</span>,{'\n'}
 {'    '}<span className="t-str">"Next.js"</span>,{'\n'}
