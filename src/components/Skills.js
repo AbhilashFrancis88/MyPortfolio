@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import CountUp from 'react-countup';
 import './Skills.css';
 
@@ -44,9 +45,20 @@ const proficiency = [
   { label: 'REST APIs',   pct: 85 },
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 50, scale: 0.95 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.1 },
+  }),
+};
+
 export default function Skills() {
   const [inView, setInView] = useState(false);
   const panelRef = useRef(null);
+  const prefersReduced = useReducedMotion();
 
   useEffect(() => {
     const el = panelRef.current;
@@ -71,8 +83,16 @@ export default function Skills() {
         <div className="skills-layout">
           {/* Bento cards */}
           <div className="skills-bento">
-            {categories.map(cat => (
-              <div className="skill-card" key={cat.title}>
+            {categories.map((cat, i) => (
+              <motion.div
+                className="skill-card"
+                key={cat.title}
+                custom={i}
+                variants={prefersReduced ? undefined : cardVariants}
+                initial={prefersReduced ? undefined : 'hidden'}
+                whileInView={prefersReduced ? undefined : 'visible'}
+                viewport={{ once: true, margin: '-60px' }}
+              >
                 <div className="skill-card-header">
                   <span className="skill-icon">{cat.icon}</span>
                   <span className="skill-cat-title">{cat.title}</span>
@@ -82,7 +102,7 @@ export default function Skills() {
                     <span className="skill-tag" key={item}>{item}</span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 

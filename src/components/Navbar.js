@@ -44,7 +44,7 @@ export default function Navbar() {
   const prefersReduced = useReducedMotion();
 
   useEffect(() => {
-    const onScroll = () => setPastHero(window.scrollY > window.innerHeight * 0.85);
+    const onScroll = () => setPastHero(window.scrollY > 50);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -126,8 +126,32 @@ export default function Navbar() {
   );
 
   return (
-    <AnimatePresence>
-      {(pastHero || open) && navContent}
-    </AnimatePresence>
+    <>
+      {/* Floating theme toggle visible while hero is in view */}
+      <AnimatePresence>
+        {!pastHero && (
+          <motion.button
+            className="floating-theme-toggle"
+            onClick={toggle}
+            aria-label="Toggle theme"
+            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            initial={prefersReduced ? false : { opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={prefersReduced ? undefined : { opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.25 }}
+          >
+            <span className={`toggle-track ${theme}`}>
+              <span className="toggle-thumb">
+                {theme === 'dark' ? <MoonIcon /> : <SunIcon />}
+              </span>
+            </span>
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {(pastHero || open) && navContent}
+      </AnimatePresence>
+    </>
   );
 }

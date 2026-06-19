@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
 import './Projects.css';
 
@@ -9,7 +10,7 @@ const projects = [
     tags: ['HTML5', 'CSS3', 'JavaScript', 'Responsive'],
     color: '#6366F1',
     emoji: '✈️',
-    href: '#',
+    href: 'https://tourism-website-two-blush.vercel.app/',
   },
   {
     title: 'Travelo – 3D Parallax',
@@ -17,7 +18,7 @@ const projects = [
     tags: ['HTML', 'CSS', 'JavaScript', 'Animation'],
     color: '#22D3EE',
     emoji: '🌊',
-    href: '#',
+    href: 'https://travelo-ten.vercel.app/',
   },
   {
     title: 'Chess Game',
@@ -25,7 +26,7 @@ const projects = [
     tags: ['JavaScript', 'Game AI', 'Minimax', 'CSS Grid'],
     color: '#F59E0B',
     emoji: '♟️',
-    href: '#',
+    href: 'https://chess-game-by-abhilash.vercel.app/',
   },
   {
     title: 'Calculator App',
@@ -33,7 +34,7 @@ const projects = [
     tags: ['React.js', 'CSS', 'Math Logic'],
     color: '#10B981',
     emoji: '🧮',
-    href: '#',
+    href: 'https://calculator-for-portfolio.vercel.app/',
   },
   {
     title: 'Quiz Game Platform',
@@ -41,11 +42,23 @@ const projects = [
     tags: ['React.js', 'JavaScript', 'State Management'],
     color: '#EC4899',
     emoji: '🎯',
-    href: '#',
+    href: 'https://world-of-quiz.vercel.app/',
   },
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 60, scale: 0.95 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.12 },
+  }),
+};
+
 export default function Projects() {
+  const prefersReduced = useReducedMotion();
+
   return (
     <section className="section projects-section" id="projects">
       <div className="container">
@@ -57,36 +70,44 @@ export default function Projects() {
 
         <div className="projects-grid">
           {projects.map((p, i) => (
-            <Tilt
+            <motion.div
               key={p.title}
-              tiltMaxAngleX={8}
-              tiltMaxAngleY={8}
-              glareEnable={false}
-              scale={1.02}
-              transitionSpeed={400}
-              className="tilt-wrapper"
+              custom={i}
+              variants={prefersReduced ? undefined : cardVariants}
+              initial={prefersReduced ? undefined : 'hidden'}
+              whileInView={prefersReduced ? undefined : 'visible'}
+              viewport={{ once: true, margin: '-80px' }}
             >
-              <div className="project-card" style={{ '--card-accent': p.color, animationDelay: `${i * 0.08}s` }}>
-                <div className="project-shimmer" />
-                <div className="project-top">
-                  <span className="project-emoji">{p.emoji}</span>
-                  <a href={p.href} className="project-link-btn" target="_blank" rel="noreferrer" aria-label="View live">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                      <polyline points="15 3 21 3 21 9"/>
-                      <line x1="10" y1="14" x2="21" y2="3"/>
-                    </svg>
-                  </a>
+              <Tilt
+                tiltMaxAngleX={8}
+                tiltMaxAngleY={8}
+                glareEnable={false}
+                scale={1.02}
+                transitionSpeed={400}
+                className="tilt-wrapper"
+              >
+                <div className="project-card" style={{ '--card-accent': p.color }}>
+                  <div className="project-shimmer" />
+                  <div className="project-top">
+                    <span className="project-emoji">{p.emoji}</span>
+                    <a href={p.href} className="project-link-btn" target="_blank" rel="noreferrer" aria-label="View live">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                      </svg>
+                    </a>
+                  </div>
+                  <h3 className="project-title">{p.title}</h3>
+                  <p className="project-desc">{p.desc}</p>
+                  <div className="project-tags">
+                    {p.tags.map(t => (
+                      <span className="project-tag" key={t} style={{ '--t': p.color }}>{t}</span>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="project-title">{p.title}</h3>
-                <p className="project-desc">{p.desc}</p>
-                <div className="project-tags">
-                  {p.tags.map(t => (
-                    <span className="project-tag" key={t} style={{ '--t': p.color }}>{t}</span>
-                  ))}
-                </div>
-              </div>
-            </Tilt>
+              </Tilt>
+            </motion.div>
           ))}
         </div>
       </div>
