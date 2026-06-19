@@ -68,12 +68,38 @@
 
 .form-group { display: flex; flex-direction: column; gap: 7px; }
 
-.form-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-muted);
-  letter-spacing: 0.04em;
+/* Floating label */
+.form-group.floating {
+  position: relative;
+  gap: 0;
+}
+
+.form-group.floating .form-label {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-dim);
+  pointer-events: none;
+  transition: all 0.2s ease;
   font-family: 'Space Grotesk', sans-serif;
+  background: transparent;
+  padding: 0 4px;
+  z-index: 1;
+}
+
+.form-group.floating .form-input {
+  padding: 18px 14px 8px;
+}
+
+.form-group.floating .form-input:focus ~ .form-label,
+.form-group.floating .form-input:not(:placeholder-shown) ~ .form-label {
+  top: 4px;
+  left: 10px;
+  font-size: 11px;
+  color: var(--cyan);
+  letter-spacing: 0.04em;
 }
 
 .form-input {
@@ -88,11 +114,12 @@
   transition: border-color 0.2s, box-shadow 0.2s;
   resize: none;
 }
-.form-input::placeholder { color: var(--text-dim); }
+.form-input::placeholder { color: transparent; }
 .form-input:focus { border-color: var(--indigo); box-shadow: 0 0 0 3px rgba(99,102,241,0.12); }
 
 .form-textarea { resize: vertical; min-height: 120px; }
 
+/* Submit button states */
 .form-submit {
   background: var(--indigo);
   color: #fff;
@@ -105,9 +132,45 @@
   cursor: pointer;
   transition: opacity 0.2s, transform 0.15s, background 0.3s;
   box-shadow: 0 0 28px rgba(99,102,241,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
 }
 .form-submit:hover { opacity: 0.88; transform: translateY(-2px); }
-.form-submit.sent { background: #10B981; }
+.form-submit.sending { pointer-events: none; }
+.form-submit.sent { background: #10B981; pointer-events: none; }
+
+/* Spinner */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Checkmark */
+.checkmark {
+  animation: checkPop 0.35s ease forwards;
+}
+
+@keyframes checkPop {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation: none; border-top-color: #fff; }
+  .checkmark { animation: none; opacity: 1; }
+}
 
 @media (max-width: 860px) { .contact-layout { grid-template-columns: 1fr; } }
 @media (max-width: 500px) {

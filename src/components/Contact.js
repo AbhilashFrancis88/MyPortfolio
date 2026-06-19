@@ -3,16 +3,20 @@ import './Contact.css';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState('idle');
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = e => {
     e.preventDefault();
-    const mailto = `mailto:abhilashfrancis88@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(form.name)}&body=${encodeURIComponent(form.message + '\n\nFrom: ' + form.email)}`;
-    window.location.href = mailto;
-    setSent(true);
-    setTimeout(() => setSent(false), 3000);
+    setStatus('sending');
+
+    setTimeout(() => {
+      const mailto = `mailto:abhilashfrancis88@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(form.name)}&body=${encodeURIComponent(form.message + '\n\nFrom: ' + form.email)}`;
+      window.location.href = mailto;
+      setStatus('sent');
+      setTimeout(() => setStatus('idle'), 3000);
+    }, 800);
   };
 
   return (
@@ -70,48 +74,58 @@ export default function Contact() {
 
           <form className="contact-form" onSubmit={handleSubmit}>
             <div className="form-row">
-              <div className="form-group">
-                <label className="form-label" htmlFor="name">Your Name</label>
+              <div className="form-group floating">
                 <input
                   className="form-input"
                   id="name"
                   name="name"
                   type="text"
-                  placeholder="John Doe"
+                  placeholder=" "
                   value={form.name}
                   onChange={handleChange}
                   required
                 />
+                <label className="form-label" htmlFor="name">Your Name</label>
               </div>
-              <div className="form-group">
-                <label className="form-label" htmlFor="email">Email Address</label>
+              <div className="form-group floating">
                 <input
                   className="form-input"
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder=" "
                   value={form.email}
                   onChange={handleChange}
                   required
                 />
+                <label className="form-label" htmlFor="email">Email Address</label>
               </div>
             </div>
-            <div className="form-group">
-              <label className="form-label" htmlFor="message">Message</label>
+            <div className="form-group floating">
               <textarea
                 className="form-input form-textarea"
                 id="message"
                 name="message"
                 rows="5"
-                placeholder="Tell me about your project or opportunity..."
+                placeholder=" "
                 value={form.message}
                 onChange={handleChange}
                 required
               />
+              <label className="form-label" htmlFor="message">Message</label>
             </div>
-            <button type="submit" className={`form-submit ${sent ? 'sent' : ''}`}>
-              {sent ? '✓ Opening your mail client...' : 'Send Message →'}
+            <button
+              type="submit"
+              className={`form-submit ${status}`}
+              disabled={status === 'sending'}
+            >
+              {status === 'idle' && 'Send Message →'}
+              {status === 'sending' && <span className="spinner" />}
+              {status === 'sent' && (
+                <svg className="checkmark" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              )}
             </button>
           </form>
         </div>

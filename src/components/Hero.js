@@ -1,41 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { TypeAnimation } from 'react-type-animation';
 import './Hero.css';
 
-const roles = [
-  'Front-End Developer',
-  'React.js Specialist',
-  'UI/UX Enthusiast',
-  'Next.js Developer',
-];
-
 export default function Hero() {
-  const [roleIdx, setRoleIdx] = useState(0);
-  const [displayed, setDisplayed] = useState('');
-  const [deleting, setDeleting] = useState(false);
-
-  useEffect(() => {
-    const current = roles[roleIdx];
-    let timeout;
-
-    if (!deleting && displayed.length < current.length) {
-      timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 65);
-    } else if (!deleting && displayed.length === current.length) {
-      timeout = setTimeout(() => setDeleting(true), 2000);
-    } else if (deleting && displayed.length > 0) {
-      timeout = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 35);
-    } else if (deleting && displayed.length === 0) {
-      setDeleting(false);
-      setRoleIdx((roleIdx + 1) % roles.length);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [displayed, deleting, roleIdx]);
-
   return (
     <section className="hero" id="hero">
-      {/* Background blobs */}
+      {/* Animated background orbs */}
       <div className="hero-blob blob-1" />
       <div className="hero-blob blob-2" />
+      <div className="hero-blob blob-3" />
       <div className="hero-grid" />
 
       <div className="hero-inner container">
@@ -48,7 +21,19 @@ export default function Hero() {
 
           <div className="hero-role-line">
             <span className="role-prefix mono-tag">{'// '}</span>
-            <span className="hero-role">{displayed}</span>
+            <TypeAnimation
+              sequence={[
+                'Front-End Developer', 2000,
+                'React.js Specialist', 2000,
+                'UI/UX Enthusiast', 2000,
+                'Next.js Developer', 2000,
+              ]}
+              wrapper="span"
+              className="hero-role"
+              speed={55}
+              deletionSpeed={70}
+              repeat={Infinity}
+            />
             <span className="cursor">|</span>
           </div>
 
@@ -99,7 +84,9 @@ export default function Hero() {
       </div>
 
       <a href="#about" className="scroll-hint" aria-label="Scroll down">
-        <span className="scroll-dot" />
+        <svg className="scroll-chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
       </a>
     </section>
   );

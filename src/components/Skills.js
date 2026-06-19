@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import CountUp from 'react-countup';
 import './Skills.css';
 
 const categories = [
@@ -44,6 +45,20 @@ const proficiency = [
 ];
 
 export default function Skills() {
+  const [inView, setInView] = useState(false);
+  const panelRef = useRef(null);
+
+  useEffect(() => {
+    const el = panelRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setInView(true); },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="section skills-section" id="skills">
       <div className="container">
@@ -72,17 +87,24 @@ export default function Skills() {
           </div>
 
           {/* Proficiency bars */}
-          <div className="proficiency-panel">
+          <div className="proficiency-panel" ref={panelRef}>
             <h3 className="prof-title">Proficiency</h3>
             <div className="prof-list">
               {proficiency.map(p => (
                 <div className="prof-row" key={p.label}>
                   <div className="prof-label-row">
                     <span className="prof-label">{p.label}</span>
-                    <span className="prof-pct">{p.pct}%</span>
+                    <span className="prof-pct">
+                      {inView ? (
+                        <CountUp end={p.pct} duration={1.4} suffix="%" />
+                      ) : '0%'}
+                    </span>
                   </div>
                   <div className="prof-track">
-                    <div className="prof-fill" style={{ width: `${p.pct}%` }} />
+                    <div
+                      className="prof-fill"
+                      style={{ width: inView ? `${p.pct}%` : '0%' }}
+                    />
                   </div>
                 </div>
               ))}

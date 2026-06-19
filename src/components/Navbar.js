@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useTheme } from '../ThemeContext';
 import Logo from './Logo';
 import './Navbar.css';
 
 const links = [
-  { label: 'About',      href: '#about' },
-  { label: 'Skills',     href: '#skills' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects',   href: '#projects' },
-  { label: 'Contact',    href: '#contact' },
+  { label: 'About',      href: '#about',      id: 'about' },
+  { label: 'Skills',     href: '#skills',     id: 'skills' },
+  { label: 'Experience', href: '#experience', id: 'experience' },
+  { label: 'Projects',   href: '#projects',   id: 'projects' },
+  { label: 'Contact',    href: '#contact',    id: 'contact' },
 ];
 
 function SunIcon() {
@@ -36,18 +37,46 @@ function MoonIcon() {
 }
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
   const { theme, toggle } = useTheme();
+  const prefersReduced = useReducedMotion();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setPastHero(window.scrollY > window.innerHeight * 0.85);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+  useEffect(() => {
+    const sectionIds = links.map(l => l.id);
+    const observers = [];
+
+    sectionIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { rootMargin: '-40% 0px -55% 0px' }
+      );
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach(o => o.disconnect());
+  }, []);
+
+  const navContent = (
+    <motion.nav
+      className={`navbar scrolled`}
+      initial={prefersReduced ? false : { y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={prefersReduced ? undefined : { y: -80, opacity: 0 }}
+      transition={{ duration: 0.35, ease: 'easeOut' }}
+    >
       <div className="nav-inner">
         <a href="#hero" className="nav-logo">
           <Logo size={36} />
@@ -55,8 +84,21 @@ export default function Navbar() {
 
         <ul className={`nav-links ${open ? 'open' : ''}`}>
           {links.map(l => (
-            <li key={l.label}>
-              <a href={l.href} onClick={() => setOpen(false)}>{l.label}</a>
+            <li key={l.label} className="nav-item">
+              <a
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className={activeSection === l.id ? 'active' : ''}
+              >
+                {l.label}
+              </a>
+              {activeSection === l.id && (
+                <motion.div
+                  className="active-indicator"
+                  layoutId="nav-indicator"
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                />
+              )}
             </li>
           ))}
           <li>
@@ -80,6 +122,12 @@ export default function Navbar() {
           </button>
         </div>
       </div>
-    </nav>
+    </motion.nav>
+  );
+
+  return (
+    <AnimatePresence>
+      {(pastHero || open) && navContent}
+    </AnimatePresence>
   );
 }

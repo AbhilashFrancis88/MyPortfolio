@@ -20,12 +20,34 @@
   width: 480px; height: 480px;
   background: radial-gradient(circle, rgba(99,102,241,0.22) 0%, transparent 70%);
   top: -120px; left: -100px;
+  animation: heroOrb1 18s ease-in-out infinite alternate;
 }
 .blob-2 {
   width: 360px; height: 360px;
   background: radial-gradient(circle, rgba(34,211,238,0.14) 0%, transparent 70%);
   bottom: 80px; right: -80px;
+  animation: heroOrb2 22s ease-in-out infinite alternate;
 }
+.blob-3 {
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(129,140,248,0.12) 0%, transparent 70%);
+  top: 40%; left: 50%;
+  animation: heroOrb3 15s ease-in-out infinite alternate;
+}
+
+@keyframes heroOrb1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(60px, 40px) scale(1.2); }
+}
+@keyframes heroOrb2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-50px, -60px) scale(1.15); }
+}
+@keyframes heroOrb3 {
+  0%   { transform: translate(0, 0) scale(0.9); opacity: 0.6; }
+  100% { transform: translate(-40px, 30px) scale(1.1); opacity: 1; }
+}
+
 .hero-grid {
   position: absolute;
   inset: 0;
@@ -209,39 +231,25 @@
 .t-bool    { color: #FF5874; }
 .t-comment { color: var(--text-dim); font-style: italic; }
 
-/* Scroll hint */
+/* Scroll hint — bouncing chevron */
 .scroll-hint {
   position: absolute;
   bottom: 36px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
+  color: var(--cyan);
+  animation: bounceChevron 2s ease-in-out infinite;
 }
 
-.scroll-dot {
+.scroll-chevron {
   display: block;
-  width: 28px;
-  height: 48px;
-  border-radius: 14px;
-  border: 2px solid var(--border);
-  position: relative;
+  opacity: 0.7;
 }
 
-.scroll-dot::after {
-  content: '';
-  position: absolute;
-  top: 7px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px; height: 9px;
-  background: var(--cyan);
-  border-radius: 2px;
-  animation: scrollBounce 1.8s ease-in-out infinite;
-}
-
-@keyframes scrollBounce {
-  0%, 100% { opacity: 1; top: 7px; }
-  50%       { opacity: 0; top: 22px; }
+@keyframes bounceChevron {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50%      { transform: translateY(10px); opacity: 1; }
 }
 
 /* Light mode overrides */
@@ -251,6 +259,14 @@
 [data-theme="light"] .terminal-body .t-key { color: #C2410C; }
 [data-theme="light"] .terminal-body .t-num { color: #C2410C; }
 [data-theme="light"] .terminal-body .t-bool { color: #DC2626; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-blob { animation: none; }
+  .cursor { animation: none; opacity: 1; }
+  .scroll-hint { animation: none; }
+  .hero-terminal { animation: none; opacity: 1; }
+}
 
 @media (max-width: 960px) {
   .hero-inner {

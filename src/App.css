@@ -1,4 +1,4 @@
-.app { min-height: 100vh; }
+.app { min-height: 100vh; position: relative; }
 
 .section {
   padding: 100px 0;
@@ -59,6 +59,83 @@
 @keyframes pulse-ring {
   0%   { transform: scale(1);   opacity: 0.6; }
   100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* ── Noise / grain overlay ── */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ── Ambient drifting blobs ── */
+.ambient-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.12;
+}
+
+.ambient-blob-1 {
+  width: 500px;
+  height: 500px;
+  background: var(--indigo);
+  top: 20%;
+  left: -10%;
+  animation: driftBlob1 25s ease-in-out infinite alternate;
+}
+
+.ambient-blob-2 {
+  width: 400px;
+  height: 400px;
+  background: var(--cyan);
+  top: 60%;
+  right: -8%;
+  animation: driftBlob2 30s ease-in-out infinite alternate;
+}
+
+.ambient-blob-3 {
+  width: 350px;
+  height: 350px;
+  background: var(--indigo-light);
+  bottom: 10%;
+  left: 30%;
+  animation: driftBlob3 20s ease-in-out infinite alternate;
+}
+
+@keyframes driftBlob1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(80px, 60px) scale(1.15); }
+}
+
+@keyframes driftBlob2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-60px, -80px) scale(1.1); }
+}
+
+@keyframes driftBlob3 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(50px, -50px) scale(1.2); }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up,
+  .ambient-blob,
+  .noise-overlay {
+    animation: none !important;
+  }
+
+  .ambient-blob {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {

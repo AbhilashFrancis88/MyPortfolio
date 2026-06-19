@@ -38,6 +38,12 @@
   font-family: 'JetBrains Mono', monospace;
   font-size: 16px;
   color: var(--cyan);
+  animation: skillFloat 3s ease-in-out infinite;
+}
+
+@keyframes skillFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
 }
 
 .skill-cat-title {
@@ -107,7 +113,13 @@
   height: 100%;
   border-radius: 3px;
   background: linear-gradient(90deg, var(--indigo), var(--cyan));
-  transition: width 1s ease;
+  transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .skill-icon { animation: none; }
+  .prof-fill { transition: none; }
 }
 
 @media (max-width: 1000px) {

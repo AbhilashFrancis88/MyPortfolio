@@ -1,4 +1,5 @@
 import React from 'react';
+import Tilt from 'react-parallax-tilt';
 import './Projects.css';
 
 const projects = [
@@ -56,25 +57,36 @@ export default function Projects() {
 
         <div className="projects-grid">
           {projects.map((p, i) => (
-            <div className="project-card" key={p.title} style={{ '--card-accent': p.color, animationDelay: `${i * 0.08}s` }}>
-              <div className="project-top">
-                <span className="project-emoji">{p.emoji}</span>
-                <a href={p.href} className="project-link-btn" target="_blank" rel="noreferrer" aria-label="View live">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                    <polyline points="15 3 21 3 21 9"/>
-                    <line x1="10" y1="14" x2="21" y2="3"/>
-                  </svg>
-                </a>
+            <Tilt
+              key={p.title}
+              tiltMaxAngleX={8}
+              tiltMaxAngleY={8}
+              glareEnable={false}
+              scale={1.02}
+              transitionSpeed={400}
+              className="tilt-wrapper"
+            >
+              <div className="project-card" style={{ '--card-accent': p.color, animationDelay: `${i * 0.08}s` }}>
+                <div className="project-shimmer" />
+                <div className="project-top">
+                  <span className="project-emoji">{p.emoji}</span>
+                  <a href={p.href} className="project-link-btn" target="_blank" rel="noreferrer" aria-label="View live">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                      <polyline points="15 3 21 3 21 9"/>
+                      <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                  </a>
+                </div>
+                <h3 className="project-title">{p.title}</h3>
+                <p className="project-desc">{p.desc}</p>
+                <div className="project-tags">
+                  {p.tags.map(t => (
+                    <span className="project-tag" key={t} style={{ '--t': p.color }}>{t}</span>
+                  ))}
+                </div>
               </div>
-              <h3 className="project-title">{p.title}</h3>
-              <p className="project-desc">{p.desc}</p>
-              <div className="project-tags">
-                {p.tags.map(t => (
-                  <span className="project-tag" key={t} style={{ '--t': p.color }}>{t}</span>
-                ))}
-              </div>
-            </div>
+            </Tilt>
           ))}
         </div>
       </div>
