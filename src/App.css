@@ -140,4 +140,6 @@
 
 @media (max-width: 768px) {
   .section { padding: 72px 0; }
+  .ambient-blob { display: none; }
+  .noise-overlay { display: none; }
 }
