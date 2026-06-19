@@ -36,6 +36,8 @@ const categories = [
   },
 ];
 
+const alsoWorkedWith = ['PHP', 'MySQL', 'NestJS', 'Laravel'];
+
 const proficiency = [
   { label: 'React.js',    pct: 95 },
   { label: 'TypeScript',  pct: 80 },
@@ -129,6 +131,15 @@ export default function Skills() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+
+        <div className="also-worked-with">
+          <h3 className="also-title">Also Worked With</h3>
+          <div className="skill-tags">
+            {alsoWorkedWith.map(item => (
+              <span className="skill-tag" key={item}>{item}</span>
+            ))}
           </div>
         </div>
       </div>

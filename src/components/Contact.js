@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 import './Contact.css';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('idle');
+  const formRef = useRef(null);
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -11,12 +13,19 @@ export default function Contact() {
     e.preventDefault();
     setStatus('sending');
 
-    setTimeout(() => {
-      const mailto = `mailto:abhilashfrancis88@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(form.name)}&body=${encodeURIComponent(form.message + '\n\nFrom: ' + form.email)}`;
-      window.location.href = mailto;
+    emailjs.sendForm(
+      process.env.REACT_APP_EMAILJS_SERVICE_ID,
+      process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+      formRef.current,
+      process.env.REACT_APP_EMAILJS_PUBLIC_KEY,
+    ).then(() => {
       setStatus('sent');
+      setForm({ name: '', email: '', message: '' });
       setTimeout(() => setStatus('idle'), 3000);
-    }, 800);
+    }).catch(() => {
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 4000);
+    });
   };
 
   return (
@@ -72,7 +81,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <form className="contact-form" onSubmit={handleSubmit}>
+          <form className="contact-form" ref={formRef} onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group floating">
                 <input
@@ -126,6 +135,7 @@ export default function Contact() {
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               )}
+              {status === 'error' && 'Something went wrong. Try again.'}
             </button>
           </form>
         </div>

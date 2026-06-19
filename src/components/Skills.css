@@ -116,6 +116,26 @@
   transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* Also worked with */
+.also-worked-with {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.also-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+}
+
+.also-worked-with .skill-tags {
+  justify-content: center;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .skill-icon { animation: none; }
