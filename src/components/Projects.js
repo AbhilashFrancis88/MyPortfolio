@@ -5,6 +5,22 @@ import './Projects.css';
 
 const projects = [
   {
+    title: 'FlavourRush',
+    desc: 'A sleek food delivery platform designed for rapid meal ordering with an intuitive UI, smooth animations, and a seamless user experience.',
+    tags: ['React.js', 'CSS3', 'JavaScript', 'Responsive'],
+    color: '#EF4444',
+    emoji: '🔥',
+    href: 'https://flavourrush.vercel.app/',
+  },
+  {
+    title: 'Pulse – Connect & Share',
+    desc: 'A modern social platform enabling users to connect, share content, and interact in real time with a clean, engaging interface.',
+    tags: ['React.js', 'JavaScript', 'Social', 'Responsive'],
+    color: '#8B5CF6',
+    emoji: '💬',
+    href: 'https://pulse-connection.vercel.app/',
+  },
+  {
     title: 'Tourism Website',
     desc: 'A responsive tourism platform where users explore popular travel destinations through a clean, interactive interface with rich visual content.',
     tags: ['HTML5', 'CSS3', 'JavaScript', 'Responsive'],
