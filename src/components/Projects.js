@@ -21,6 +21,22 @@ const projects = [
     href: 'https://pulse-connection.vercel.app/',
   },
   {
+    title: 'Inkwell – Blog Platform',
+    desc: 'A creative blogging platform where ideas find their voice, offering users a clean space to express and share their thoughts with the world.',
+    tags: ['React.js', 'JavaScript', 'Blog', 'Responsive'],
+    color: '#F97316',
+    emoji: '✍️',
+    href: 'https://inkwellbogs.vercel.app/',
+  },
+  {
+    title: 'Realtime Chat',
+    desc: 'A lightweight real-time chat application powered by the BroadcastChannel API, enabling instant messaging across browser tabs without any backend server.',
+    tags: ['React.js', 'BroadcastChannel API', 'Real-time'],
+    color: '#3B82F6',
+    emoji: '💬',
+    href: 'https://chatapp-xi-rouge.vercel.app/',
+  },
+  {
     title: 'Tourism Website',
     desc: 'A responsive tourism platform where users explore popular travel destinations through a clean, interactive interface with rich visual content.',
     tags: ['HTML5', 'CSS3', 'JavaScript', 'Responsive'],
