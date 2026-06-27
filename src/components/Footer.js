@@ -14,7 +14,7 @@ export default function Footer() {
         </p>
         <div className="footer-links">
           <a href="https://github.com/AbhilashFrancis88" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="https://linkedin.com/in/abhilash-francis-66971118a" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/abhilashfrancis" target="_blank" rel="noreferrer">LinkedIn</a>
           <a href="mailto:abhilashfrancis88@gmail.com">Email</a>
         </div>
       </div>

@@ -42,5 +42,5 @@ npm run build
 ## Links
 
 - [GitHub](https://github.com/AbhilashFrancis88)
-- [LinkedIn](https://linkedin.com/in/abhilash-francis-66971118a)
+- [LinkedIn](https://www.linkedin.com/in/abhilashfrancis)
 - [Email](mailto:abhilashfrancis88@gmail.com)
